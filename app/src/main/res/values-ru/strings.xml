@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">Каршеринг</string>
+    <string name="splash_title">Каршеринг</string>
+    <string name="car_list_title">Автомобили</string>
+    <string name="car_list_empty">Нет доступных автомобилей</string>
+    <string name="car_detail_title">Детали автомобиля</string>
+    <string name="price_per_min">%.1f за мин</string>
+    <string name="book_car">Забронировать</string>
+    <string name="booking_list_title">Мои бронирования</string>
+    <string name="booking_list_empty">Пока нет бронирований</string>
+    <string name="booking_edit_title">Бронирование</string>
+    <string name="booking_title_hint">Заголовок</string>
+    <string name="booking_description_hint">Описание</string>
+    <string name="booking_date_hint">Дата (метка времени)</string>
+    <string name="my_bookings">Мои бронирования</string>
+    <string name="add_booking">Добавить бронирование</string>
+    <string name="save">Сохранить</string>
+    <string name="delete">Удалить</string>
+    <string name="retry">Повторить</string>
+    <string name="settings_title">Настройки</string>
+    <string name="settings_theme">Тема</string>
+    <string name="settings_theme_light">Светлая</string>
+    <string name="settings_theme_dark">Тёмная</string>
+    <string name="settings_theme_system">Как в системе</string>
+    <string name="settings_language">Язык</string>
+    <string name="settings_lang_english">Английский</string>
+    <string name="settings_lang_russian">Русский</string>
+    <string name="settings_restart_hint">Смена языка может потребовать перезапуска приложения.</string>
+</resources>
