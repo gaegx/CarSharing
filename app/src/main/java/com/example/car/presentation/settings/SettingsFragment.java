@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
@@ -36,6 +37,20 @@ public final class SettingsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         viewModel = new ViewModelProvider(this).get(SettingsViewModel.class);
+
+        EditText apiBaseUrl = view.findViewById(R.id.settings_api_base_url);
+        View apiSaveBtn = view.findViewById(R.id.settings_api_base_url_save);
+        if (apiBaseUrl != null) {
+            apiBaseUrl.setText(viewModel.getCurrentApiBaseUrl());
+        }
+        if (apiSaveBtn != null) {
+            apiSaveBtn.setOnClickListener(v -> {
+                if (apiBaseUrl == null) return;
+                String url = apiBaseUrl.getText() != null ? apiBaseUrl.getText().toString() : "";
+                viewModel.setApiBaseUrl(url);
+                Toast.makeText(requireContext(), "Saved", Toast.LENGTH_SHORT).show();
+            });
+        }
 
         RadioGroup themeGroup = view.findViewById(R.id.settings_theme_group);
         int currentTheme = viewModel.getCurrentThemeMode();

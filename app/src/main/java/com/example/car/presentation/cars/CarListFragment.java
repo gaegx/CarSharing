@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.car.R;
 import com.example.car.domain.model.Car;
+import com.example.car.data.network.NetworkStatus;
 import com.example.car.presentation.state.UiState;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -38,6 +39,10 @@ public final class CarListFragment extends Fragment {
     private TextView emptyText;
     private RecyclerView recyclerView;
     private View errorRetry;
+    private View banner;
+    private TextView bannerText;
+    private View importButton;
+    private View importProgress;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -58,6 +63,10 @@ public final class CarListFragment extends Fragment {
         emptyText = view.findViewById(R.id.car_list_empty_text);
         recyclerView = view.findViewById(R.id.car_list_recycler);
         errorRetry = view.findViewById(R.id.car_list_error_retry);
+        banner = view.findViewById(R.id.car_list_banner);
+        bannerText = view.findViewById(R.id.car_list_banner_text);
+        importButton = view.findViewById(R.id.car_list_import_button);
+        importProgress = view.findViewById(R.id.car_list_import_progress);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
         adapter = new CarListAdapter(car -> {
@@ -70,6 +79,10 @@ public final class CarListFragment extends Fragment {
             errorRetry.setOnClickListener(v -> viewModel.retry());
         }
 
+        if (importButton != null) {
+            importButton.setOnClickListener(v -> viewModel.importCars(false));
+        }
+
         FloatingActionButton fabBookings = view.findViewById(R.id.fab_my_bookings);
         if (fabBookings != null) {
             fabBookings.setOnClickListener(v ->
@@ -77,6 +90,25 @@ public final class CarListFragment extends Fragment {
         }
 
         viewModel.getCarListState().observe(getViewLifecycleOwner(), this::renderState);
+        viewModel.getNetworkStatus().observe(getViewLifecycleOwner(), this::renderNetwork);
+        viewModel.getBannerText().observe(getViewLifecycleOwner(), this::renderBannerText);
+        viewModel.getImportState().observe(getViewLifecycleOwner(), state -> {
+            if (state == null) return;
+            if (importProgress != null) importProgress.setVisibility(state.isLoading() ? View.VISIBLE : View.GONE);
+            if (importButton != null) {
+                importButton.setEnabled(!state.isLoading());
+                if (importButton instanceof android.widget.Button) {
+                    ((android.widget.Button) importButton).setText(state.isLoading()
+                            ? getString(R.string.import_in_progress)
+                            : getString(R.string.import_data));
+                }
+            }
+            if (state.isSuccess() && state.getData() != null && state.getData() > 0) {
+                Toast.makeText(requireContext(), getString(R.string.import_success, state.getData()), Toast.LENGTH_LONG).show();
+            } else if (state.isError() && state.getMessage() != null) {
+                Toast.makeText(requireContext(), state.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     private void renderState(UiState<List<Car>> state) {
@@ -93,5 +125,44 @@ public final class CarListFragment extends Fragment {
         if (state.isSuccess() && state.getData() != null) {
             adapter.submitList(state.getData());
         }
+    }
+
+    private void renderNetwork(@Nullable NetworkStatus status) {
+        boolean offline = status == NetworkStatus.OFFLINE;
+        if (offline) {
+            showBanner(getString(R.string.offline_banner), false);
+        } else {
+            // online: banner text (if any) will decide
+            String txt = viewModel.getBannerText().getValue();
+            if (txt == null || txt.trim().isEmpty()) {
+                hideBanner();
+            } else {
+                showBanner(txt, true);
+            }
+        }
+    }
+
+    private void renderBannerText(@Nullable String txt) {
+        NetworkStatus status = viewModel.getNetworkStatus().getValue();
+        if (status == NetworkStatus.OFFLINE) {
+            showBanner(getString(R.string.offline_banner), false);
+            return;
+        }
+        if (txt == null || txt.trim().isEmpty()) {
+            hideBanner();
+        } else {
+            showBanner(txt, true);
+        }
+    }
+
+    private void showBanner(@NonNull String text, boolean showImportAction) {
+        if (banner == null || bannerText == null) return;
+        banner.setVisibility(View.VISIBLE);
+        bannerText.setText(text);
+        if (importButton != null) importButton.setVisibility(showImportAction ? View.VISIBLE : View.GONE);
+    }
+
+    private void hideBanner() {
+        if (banner != null) banner.setVisibility(View.GONE);
     }
 }

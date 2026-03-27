@@ -2,12 +2,11 @@ package com.example.car.domain.usecase;
 
 import androidx.annotation.NonNull;
 
-import com.example.car.domain.model.Car;
+import com.example.car.domain.model.CarListResult;
+import com.example.car.domain.model.CarQuery;
 import com.example.car.domain.repository.CarRepository;
 import com.example.car.domain.repository.ResultCallback;
 import com.example.car.util.AppExecutors;
-
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -23,9 +22,9 @@ public final class GetCarsUseCase {
         this.executors = executors;
     }
 
-    public void execute(@NonNull ResultCallback<List<Car>> callback) {
+    public void execute(@NonNull CarQuery query, @NonNull ResultCallback<CarListResult> callback) {
         executors.runOnDiskIo(() ->
-                carRepository.getCars(result -> executors.runOnMainThread(() -> callback.onResult(result)))
+                carRepository.getCars(query, result -> executors.runOnMainThread(() -> callback.onResult(result)))
         );
     }
 }

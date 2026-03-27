@@ -17,6 +17,7 @@ public final class PreferencesManager {
     private static final String PREFS_NAME = "car_app_prefs";
     private static final String KEY_THEME_MODE = "theme_mode"; // 0=light, 1=dark, 2=system
     private static final String KEY_LANGUAGE = "language";   // "en", "ru"
+    private static final String KEY_API_BASE_URL = "api_base_url"; // e.g. http://localhost:8080/api/v1/
 
     private final SharedPreferences prefs;
 
@@ -41,5 +42,20 @@ public final class PreferencesManager {
 
     public void setLanguage(@NonNull String languageCode) {
         prefs.edit().putString(KEY_LANGUAGE, languageCode).apply();
+    }
+
+    @NonNull
+    public String getApiBaseUrl() {
+        String raw = prefs.getString(KEY_API_BASE_URL, "http://localhost:8080/api/v1/");
+        if (raw == null) return "http://localhost:8080/api/v1/";
+        String trimmed = raw.trim();
+        if (!trimmed.endsWith("/")) trimmed = trimmed + "/";
+        return trimmed;
+    }
+
+    public void setApiBaseUrl(@NonNull String url) {
+        String trimmed = url.trim();
+        if (!trimmed.endsWith("/")) trimmed = trimmed + "/";
+        prefs.edit().putString(KEY_API_BASE_URL, trimmed).apply();
     }
 }

@@ -11,6 +11,9 @@ navigation = "2.9.6"
 lifecycle = "2.7.0"
 room = "2.6.1"
 datastore = "1.0.0"
+retrofit = "2.11.0"
+okhttp = "4.12.0"
+jackson = "2.17.2"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -42,6 +45,14 @@ constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayo
 # RecyclerView
 recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version = "1.3.2" }
 coordinatorlayout = { group = "androidx.coordinatorlayout", name = "coordinatorlayout", version = "1.2.0" }
+
+# Networking (Retrofit + OkHttp + Jackson)
+retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
+retrofit-converter-jackson = { group = "com.squareup.retrofit2", name = "converter-jackson", version.ref = "retrofit" }
+okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
+okhttp-logging = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
+jackson-databind = { group = "com.fasterxml.jackson.core", name = "jackson-databind", version.ref = "jackson" }
+jackson-jsr310 = { group = "com.fasterxml.jackson.datatype", name = "jackson-datatype-jsr310", version.ref = "jackson" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

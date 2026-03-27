@@ -21,12 +21,14 @@ public final class SettingsViewModel extends BaseViewModel {
     private final PreferencesManager preferencesManager;
     private final MutableLiveData<Integer> themeMode = new MutableLiveData<>();
     private final MutableLiveData<String> languageCode = new MutableLiveData<>();
+    private final MutableLiveData<String> apiBaseUrl = new MutableLiveData<>();
 
     @Inject
     public SettingsViewModel(@NonNull PreferencesManager preferencesManager) {
         this.preferencesManager = preferencesManager;
         themeMode.setValue(preferencesManager.getThemeMode());
         languageCode.setValue(preferencesManager.getLanguage());
+        apiBaseUrl.setValue(preferencesManager.getApiBaseUrl());
     }
 
     public LiveData<Integer> getThemeMode() {
@@ -35,6 +37,10 @@ public final class SettingsViewModel extends BaseViewModel {
 
     public LiveData<String> getLanguageCode() {
         return languageCode;
+    }
+
+    public LiveData<String> getApiBaseUrl() {
+        return apiBaseUrl;
     }
 
     public void setThemeMode(int mode) {
@@ -47,6 +53,11 @@ public final class SettingsViewModel extends BaseViewModel {
         languageCode.setValue(code);
     }
 
+    public void setApiBaseUrl(@NonNull String url) {
+        preferencesManager.setApiBaseUrl(url);
+        apiBaseUrl.setValue(preferencesManager.getApiBaseUrl());
+    }
+
     public int getCurrentThemeMode() {
         return preferencesManager.getThemeMode();
     }
@@ -54,5 +65,10 @@ public final class SettingsViewModel extends BaseViewModel {
     @NonNull
     public String getCurrentLanguage() {
         return preferencesManager.getLanguage();
+    }
+
+    @NonNull
+    public String getCurrentApiBaseUrl() {
+        return preferencesManager.getApiBaseUrl();
     }
 }

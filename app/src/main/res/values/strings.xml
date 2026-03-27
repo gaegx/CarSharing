@@ -3,6 +3,10 @@
     <string name="splash_title">Car Sharing</string>
     <string name="car_list_title">Cars</string>
     <string name="car_list_empty">No cars available</string>
+    <string name="import_data">Import</string>
+    <string name="offline_banner">No internet connection</string>
+    <string name="import_success">Imported: %1$d cars</string>
+    <string name="import_in_progress">Importing…</string>
     <string name="car_detail_title">Car details</string>
     <string name="price_per_min">%.1f per min</string>
     <string name="book_car">Book this car</string>
@@ -18,6 +22,8 @@
     <string name="delete">Delete</string>
     <string name="retry">Retry</string>
     <string name="settings_title">Settings</string>
+    <string name="settings_api_base_url">API base URL</string>
+    <string name="settings_api_base_url_hint">http://localhost:8080/api/v1/</string>
     <string name="settings_theme">Theme</string>
     <string name="settings_theme_light">Light</string>
     <string name="settings_theme_dark">Dark</string>

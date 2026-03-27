@@ -59,6 +59,13 @@ dependencies {
     annotationProcessor(libs.room.compiler)
     // DataStore
     implementation(libs.datastore.preferences)
+    // Networking
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.converter.jackson)
+    implementation(libs.okhttp)
+    implementation(libs.okhttp.logging)
+    implementation(libs.jackson.databind)
+    implementation(libs.jackson.jsr310)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

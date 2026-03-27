@@ -3,6 +3,10 @@
     <string name="splash_title">Каршеринг</string>
     <string name="car_list_title">Автомобили</string>
     <string name="car_list_empty">Нет доступных автомобилей</string>
+    <string name="import_data">Импорт</string>
+    <string name="offline_banner">Нет интернет-соединения</string>
+    <string name="import_success">Импортировано: %1$d машин</string>
+    <string name="import_in_progress">Импорт…</string>
     <string name="car_detail_title">Детали автомобиля</string>
     <string name="price_per_min">%.1f за мин</string>
     <string name="book_car">Забронировать</string>
@@ -18,6 +22,8 @@
     <string name="delete">Удалить</string>
     <string name="retry">Повторить</string>
     <string name="settings_title">Настройки</string>
+    <string name="settings_api_base_url">Базовый URL API</string>
+    <string name="settings_api_base_url_hint">http://localhost:8080/api/v1/</string>
     <string name="settings_theme">Тема</string>
     <string name="settings_theme_light">Светлая</string>
     <string name="settings_theme_dark">Тёмная</string>

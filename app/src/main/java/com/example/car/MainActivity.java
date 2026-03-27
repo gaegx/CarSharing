@@ -7,9 +7,12 @@ import android.view.MenuItem;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.NavigationUI;
 
 import com.example.car.data.local.PreferencesManager;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import javax.inject.Inject;
 
@@ -22,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     PreferencesManager preferencesManager;
 
     private NavController navController;
+    private BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +37,13 @@ public class MainActivity extends AppCompatActivity {
                 .findFragmentById(R.id.nav_host_fragment);
         if (navHost != null) {
             navController = navHost.getNavController();
+            bottomNavigationView = findViewById(R.id.bottom_nav);
+            if (bottomNavigationView != null) {
+                NavigationUI.setupWithNavController(bottomNavigationView, navController);
+                navController.addOnDestinationChangedListener((controller, destination, arguments) ->
+                        updateBottomNavVisibility(destination)
+                );
+            }
         }
     }
 
@@ -66,5 +77,14 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
         return super.onSupportNavigateUp();
+    }
+
+    private void updateBottomNavVisibility(NavDestination destination) {
+        if (bottomNavigationView == null || destination == null) return;
+        int id = destination.getId();
+        boolean show = id == R.id.carListFragment
+                || id == R.id.bookingListFragment
+                || id == R.id.settingsFragment;
+        bottomNavigationView.setVisibility(show ? android.view.View.VISIBLE : android.view.View.GONE);
     }
 }
